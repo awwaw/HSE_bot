@@ -1,6 +1,13 @@
 class ELIZA:
+    """def __init__(self, p):"""
 
-    """def __init__(self, keywords):"""
+    """def load_data(self, p):"""
+
+    """def split_to_sent(self):"""
+
+    """def split_to_tokens(self):"""
+
+    """def preprocess(self):"""
 
     def find_keywords(self, sentences_list, keywords):
         for sentence in sentences_list:
