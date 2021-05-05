@@ -31,7 +31,6 @@ class MathSkill:
                 else:
                     operations.append('-')
         nums = nums[::-1]
-        print(operations)
         for ch in operations:
             a = nums[-1]
             nums.pop(-1)
@@ -45,5 +44,4 @@ class MathSkill:
                 nums.append(a / b)
             else:
                 nums.append(a * b)
-            print(nums)
         return str(nums[-1])
