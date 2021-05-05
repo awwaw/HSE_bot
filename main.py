@@ -1,5 +1,5 @@
 from bot import Bot
-from skill import EchoSkill
+from EchoSkill import EchoSkill
 from ELIZA import ELIZA
 
 
