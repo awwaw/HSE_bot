@@ -1,7 +1,7 @@
 from telegram.ext import Updater, CallbackContext
 from telegram import Update
 from telegram.ext import CommandHandler, MessageHandler, Filters
-from skill import EchoSkill
+from EchoSkill import EchoSkill
 
 
 class Bot:
