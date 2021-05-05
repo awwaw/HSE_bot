@@ -3,7 +3,7 @@ from skill import EchoSkill
 
 
 def main():
-    bot = Bot('1121091418:AAGRPeCAE_VR-fZhusOc3WWbwGPY8SRw0yw')
+    bot = Bot('TOKEN')
     bot.run()
 
 

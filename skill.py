@@ -1,11 +1,15 @@
+from telegram.ext import CallbackContext
+from telegram import Update
+
+
 class EchoSkill:
-    def __init__(self, message, update, context):
+    def __init__(self, message: str, update: Update, context: CallbackContext):
         self.message = message
         self.keywords = []
         self.update = update
         self.context = context
 
-    def match(self):
+    def match(self) -> bool:
         return bool(self.message)
 
     def answer(self):
