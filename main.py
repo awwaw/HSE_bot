@@ -2,7 +2,7 @@ from bot import Bot
 from EchoSkill import EchoSkill
 
 def main():
-    bot = Bot('TOKEN')
+    bot = Bot('1751454916:AAEGnqf0okA7PX5N0oeJU0MzdliJrMgtcpo')
     bot.run()
 
 
