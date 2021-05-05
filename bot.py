@@ -2,6 +2,7 @@ from telegram.ext import Updater, CallbackContext
 from telegram import Update
 from telegram.ext import CommandHandler, MessageHandler, Filters
 from EchoSkill import EchoSkill
+from MathSkill import MathSkill
 
 
 class Bot:
@@ -11,7 +12,7 @@ class Bot:
         self.dispatcher = self.updater.dispatcher
         self.message_handler = MessageHandler(Filters.text & (~Filters.command), self.get_message)
         self.dispatcher.add_handler(self.message_handler)
-        self.skills = [EchoSkill()]
+        self.skills = [MathSkill(), EchoSkill()]
 
     def get_message(self, update: Update, context: CallbackContext):
         message = update.message.text
