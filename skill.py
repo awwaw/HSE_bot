@@ -9,5 +9,5 @@ class EchoSkill():
         return True
 
     def answer(self):
-        self.context.bot.send_message(chat_id=update.effective_chat.id,
-                                      text=update.message.text)
+        self.context.bot.send_message(chat_id=self.update.effective_chat.id,
+                                      text=self.update.message.text)
