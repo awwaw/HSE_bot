@@ -3,15 +3,11 @@ from telegram import Update
 
 
 class EchoSkill:
-    def __init__(self, message: str, update: Update, context: CallbackContext):
-        self.message = message
+    def __init__(self):
         self.keywords = []
-        self.update = update
-        self.context = context
 
-    def match(self) -> bool:
-        return bool(self.message)
+    def match(self, message: str) -> bool:
+        return bool(message)
 
-    def answer(self):
-        self.context.bot.send_message(chat_id=self.update.effective_chat.id,
-                                      text=self.update.message.text)
+    def answer(self, message: str):
+        return message
