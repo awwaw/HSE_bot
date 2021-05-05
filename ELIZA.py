@@ -1,4 +1,5 @@
 class ELIZA:
+
     """def __init__(self, p):"""
 
     """def load_data(self, p):"""
@@ -9,14 +10,12 @@ class ELIZA:
 
     """def preprocess(self):"""
 
-    def find_keywords(self, sentences_list, keywords):
-        for sentence in sentences_list:
+    def find_keywords(self, key_words, tokens):
+        for token in tokens:
             lst = []
-            for mas in keywords:
-                for word in mas:
-                    if word in sentence:
-                        lst.append(word)
+            if token in key_words:
+                lst.append(token)
             print('{0} key word(s) in sentence: {1}'.format(len(lst), ', '.join(lst)))
-            print(sentence + "\n")
+            print(token + "\n")
 
     """def match_templates(self):"""
