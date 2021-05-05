@@ -30,3 +30,15 @@ message_handler = MessageHandler(Filters.text & (~Filters.command), echo)
 dispatcher.add_handler(message_handler)
 
 updater.start_polling()
+
+
+def find_keywords(sentences_list, keywords):
+    for sentence in sentences_list:
+        lst=[]
+        for mas in keywords:
+            for word in mas:
+                if word in sentence:
+                    lst.append(word)
+        print('{0} key word(s) in sentence: {1}'.format(len(lst), ', '.join(lst)))
+        print(sentence + "\n")
+
