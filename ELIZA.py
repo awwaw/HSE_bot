@@ -73,8 +73,8 @@ class ELIZA:
     def find_keywords(self, key_words, tokens):
         for token in tokens:
             lst = []
-            if token in key_words:
-                lst.append(token)
+            if token in key_words.keys():
+                lst.append(key_words[token])
             print('{0} key word(s) in sentence: {1}'.format(len(lst), ', '.join(lst)))
             print(token + "\n")
 
