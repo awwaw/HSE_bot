@@ -1,10 +1,21 @@
 import nltk
 from nltk.tokenize import sent_tokenize, word_tokenize
+from telegram.ext import Updater, CallbackContext
+from telegram import Update
+from telegram.ext import CommandHandler, MessageHandler, Filters
+from EchoSkill import EchoSkill
 
 
 class Bot():
-    def __init__(self, message):
-        self.message = message
+    def __init__(self, token: str):
+        self.token = token
+        self.updater = Updater(token=self.token, use_context=True)
+        self.dispatcher = self.updater.dispatcher
+        self.message_handler = MessageHandler(Filters.text & (~Filters.command), self.get_message)
+        self.dispatcher.add_handler(self.message_handler)
+        self.skills = [EchoSkill()]
+
+        self.message = self.get_message
         self.words = self.split_to_tokens()
         self.dict = {"were": "was", "'m": "i am", "'re": "you are"}
 
@@ -27,8 +38,14 @@ class Bot():
                     new_word = self.dict[new_word]
                 self.words[i][j] = new_word
 
+    def get_message(self, update: Update, context: CallbackContext):
+        message = update.message.text
+        for skill in self.skills:
+            if skill.match(message):
+                context.bot.send_message(chat_id=update.effective_chat.id,
+                                         text=skill.answer(message))
+                break
 
-nltk.download('punkt')
-bot = Bot("Hello! I'm Azalia, and you're our bot. You WERE created by US. 1234")
-bot.process()
-print(bot.words)
+    def run(self):
+        self.updater.start_polling()
+
