@@ -19,6 +19,7 @@ class Bot:
             if skill.match(message):
                 context.bot.send_message(chat_id=update.effective_chat.id,
                                          text=skill.answer(message))
+                break
 
     def run(self):
         self.updater.start_polling()
