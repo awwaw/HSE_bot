@@ -11,13 +11,15 @@ class Bot:
         self.dispatcher = self.updater.dispatcher
         self.message_handler = MessageHandler(Filters.text & (~Filters.command), self.get_message)
         self.dispatcher.add_handler(self.message_handler)
-        self.skills = []
+        self.skills = [EchoSkill()]
 
     def get_message(self, update: Update, context: CallbackContext):
         message = update.message.text
-        skill = EchoSkill(message, update, context)
-        if skill.match():
-            skill.answer()
+        for skill in self.skills:
+            if skill.match(message):
+                context.bot.send_message(chat_id=update.effective_chat.id,
+                                         text=skill.answer(message))
+                break
 
     def run(self):
         self.updater.start_polling()
