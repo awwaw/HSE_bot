@@ -1,11 +1,8 @@
 initial: How do you do.  Please tell me your problem.
-
 final: Goodbye.  Thank you for talking to me.
-
 quit: bye
 quit: goodbye
 quit: quit
-
 pre: dont don't
 pre: cant can't
 pre: wont won't
@@ -22,7 +19,6 @@ pre: were was
 pre: you're you are
 pre: i'm i am
 pre: same alike
-
 post: am are
 post: your my
 post: me you
@@ -32,7 +28,6 @@ post: i you
 post: you I
 post: my your
 post: i'm you are
-
 synon: belief feel think believe wish
 synon: family mother mom father dad sister brother wife children child
 synon: desire want need
@@ -41,7 +36,6 @@ synon: happy elated glad better
 synon: cannot can't
 synon: everyone everybody nobody noone
 synon: be am is are was
-
 key: xnone
   decomp: *
     reasmb: I'm not sure I understand you fully.
