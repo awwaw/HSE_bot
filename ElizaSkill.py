@@ -113,8 +113,5 @@ class ElizaSkill:
         new_tokens = []
         for token in tokens:
             if token in self.post[post]:
-                if len(self.post[post]) > 2:
-                    new_tokens.append("you are")
-                else:
-                    new_tokens.append(self.post[post][1])
+                new_tokens.append(self.post[post][1:])
         return new_tokens
