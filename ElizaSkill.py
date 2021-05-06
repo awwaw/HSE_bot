@@ -109,7 +109,12 @@ class ElizaSkill:
     def match_templates(self):
         pass
 
-    def postprocess(self, tokens, dict_doctor):
+    def postprocess(self, tokens):
+        new_tokens = []
         for token in tokens:
-            if token in dict_doctor[synon]:
-                token = dict_doctor[synon]
+            if token in self.post[post]:
+                if len(self.post[post]) > 2:
+                    new_tokens.append("you are")
+                else:
+                    new_tokens.append(self.post[post][1])
+        return new_tokens
