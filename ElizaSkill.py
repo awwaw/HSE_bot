@@ -10,12 +10,23 @@ class Match:
         self.indexes = indexes
         self.tokens = tokens
 
-
 class Template:
     def __init__(self, decomposition: List[str],
                  substitution: List[List[str]] = None):
         self.decomposition = decomposition
         self.substitution = substitution if substitution else []
+
+    def apply(self, sentence: List[str], template: List[str], ind: List[int]):
+        ind += [len(sentence)]
+        ans = []
+        i = 0
+        for el in template:
+            if not el.isnumeric():
+                ans.append(el)
+            else:
+                ans += sentence[ind[i]:ind[i + 1]]
+                i += 1
+        return ans
 
     def __match(self, sentence: List[str], cur_i: int,
               cur_j: int, begins: List[int]) -> List[Match]:
@@ -43,10 +54,7 @@ class Template:
     def match(self, sentence: List[str]) -> List[Match]:
         return self.__match(sentence, 0, 0, [])
 
-    def apply(self, sentence: List[str], choice=None):
-        pass
-
-
+      
 class Rule:
     def __init__(self, keyword: str, priority: int = 0,
                  templates: List[Template] = None):
@@ -114,8 +122,17 @@ class ElizaSkill:
     def split_to_sent(self, text: str) -> List[str]:
         return tokenize.sent_tokenize(text)
 
-    def split_to_tokens(self, sentence: str) -> List[str]:
-        return tokenize.word_tokenize(sentence)
+   def split_to_tokens(self, sentences: str) -> List[List[str]]:
+        punctuations = '''!()-[]{};:\,<>./?@#$%^&*_~'''
+        tokenized_text = self.split_to_sent(sentences)
+        words = []
+        for sent in tokenized_text:
+            no_punct_sent = ""
+            for char in sent:
+                if char not in punctuations:
+                    no_punct_sent = no_punct_sent + char
+            words.append(no_punct_sent.split())
+        return words
 
     def preprocess(self, text: str) -> List[List[str]]:
         tokens = [self.split_to_tokens(sentence)

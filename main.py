@@ -4,7 +4,7 @@ from ElizaSkill import Template
 import nltk
 
 def main():
-    bot = Bot('1121091418:AAGRPeCAE_VR-fZhusOc3WWbwGPY8SRw0yw')
+    bot = Bot('')
     template = Template(
         ['0', 'a', '2'],
         [[]]
