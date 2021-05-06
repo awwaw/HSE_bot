@@ -1,6 +1,7 @@
 import re
 from typing import List
 from nltk import tokenize
+from Match import Match
 
 templates_file = 'doctor.txt'
 
@@ -11,8 +12,28 @@ class Template:
         self.decomposition = decomposition
         self.substitution = substitution if substitution else []
 
-    def match(self, sentence: List[str]) -> bool:
-        pass
+    def match(self, sentence: List[str], template: List[str], cur_i: int,
+              cur_j: int, begins: List[int]) -> List[Match]:
+        if (len(template) - cur_i) * (len(sentence) - cur_j) == 0:
+            if (len(template) - cur_i) + (len(sentence) - cur_j) == 0:
+                return [Match(sentence, begins)]
+            else:
+                return []
+        if template[cur_i].isdigit():
+            cur = int(template[cur_i])
+            if cur > 0:
+                if cur_j + cur <= len(sentence):
+                    return self.match(sentence, template, cur_i + 1, cur_j + cur, begins + [cur_j])
+                return []
+            else:
+                list_results = []
+                for k in range(len(sentence) - cur_j):
+                    list_results += self.match(sentence, template, cur_i + 1, cur_j + k, begins + [cur_j])
+                return list_results
+        else:
+            if sentence[cur_j] == template[cur_i]:
+                return self.match(sentence, template, cur_i + 1, cur_j + 1, begins + [cur_j])
+            return []
 
     def apply(self, sentence: List[str], choice=None):
         pass
@@ -39,7 +60,7 @@ class ElizaSkill:
 
     #  TODO
     def match(self, message: str) -> bool:
-        return False
+        return True
 
     #  TODO
     def answer(self, message: str) -> str:
