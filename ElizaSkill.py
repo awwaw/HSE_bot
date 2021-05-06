@@ -1,9 +1,14 @@
 import re
 from typing import List
 from nltk import tokenize
-from Match import Match
 
 templates_file = 'doctor.txt'
+
+
+class Match:
+    def __init__(self, tokens: list, indexes: list = []):
+        self.indexes = indexes
+        self.tokens = tokens
 
 
 class Template:
@@ -12,28 +17,31 @@ class Template:
         self.decomposition = decomposition
         self.substitution = substitution if substitution else []
 
-    def match(self, sentence: List[str], template: List[str], cur_i: int,
+    def __match(self, sentence: List[str], cur_i: int,
               cur_j: int, begins: List[int]) -> List[Match]:
-        if (len(template) - cur_i) * (len(sentence) - cur_j) == 0:
-            if (len(template) - cur_i) + (len(sentence) - cur_j) == 0:
+        if (len(self.decomposition) - cur_i) * (len(sentence) - cur_j) == 0:
+            if (len(self.decomposition) - cur_i) + (len(sentence) - cur_j) == 0:
                 return [Match(sentence, begins)]
             else:
                 return []
-        if template[cur_i].isdigit():
-            cur = int(template[cur_i])
+        if self.decomposition[cur_i].isdigit():
+            cur = int(self.decomposition[cur_i])
             if cur > 0:
                 if cur_j + cur <= len(sentence):
-                    return self.match(sentence, template, cur_i + 1, cur_j + cur, begins + [cur_j])
+                    return self.__match(sentence, cur_i + 1, cur_j + cur, begins + [cur_j])
                 return []
             else:
                 list_results = []
                 for k in range(len(sentence) - cur_j):
-                    list_results += self.match(sentence, template, cur_i + 1, cur_j + k, begins + [cur_j])
+                    list_results += self.__match(sentence, cur_i + 1, cur_j + k, begins + [cur_j])
                 return list_results
         else:
-            if sentence[cur_j] == template[cur_i]:
-                return self.match(sentence, template, cur_i + 1, cur_j + 1, begins + [cur_j])
+            if sentence[cur_j] == self.decomposition[cur_i]:
+                return self.__match(sentence, cur_i + 1, cur_j + 1, begins + [cur_j])
             return []
+
+    def match(self, sentence: List[str]) -> List[Match]:
+        return self.__match(sentence, 0, 0, [])
 
     def apply(self, sentence: List[str], choice=None):
         pass

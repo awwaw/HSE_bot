@@ -1,7 +1,6 @@
 from bot import Bot
 from EchoSkill import EchoSkill
 from ElizaSkill import Template
-from Match import Match
 import nltk
 
 def main():
