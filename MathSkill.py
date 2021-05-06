@@ -1,7 +1,3 @@
-from telegram.ext import CallbackContext
-from telegram import Update
-
-
 class MathSkill:
     def __init__(self):
         self.keywords = ['умножь', 'раздели', 'подели', 'сложи', 'плюс',
