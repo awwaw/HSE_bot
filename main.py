@@ -1,14 +1,10 @@
 from bot import Bot
-import nltk
-from EchoSkill import EchoSkill
-import nltk
 
 
 def main():
-    bot = Bot('')
+    bot = Bot('1665573427:AAEuFh15FLJfoAqGrAXuE6xY30wmpcGu3qY')
     bot.run()
 
 
 if __name__ == '__main__':
-    nltk.download('punkt')
     main()

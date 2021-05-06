@@ -14,17 +14,22 @@ class Bot:
         self.message_handler = MessageHandler(Filters.text & (~Filters.command), self.get_message)
         self.dispatcher.add_handler(self.message_handler)
         self.skills = [MathSkill(), EchoSkill()]
-        self.dict = {"were": "was", "'m": "am", "'re": "are"}
+        self.dict = {"were": "was", "i'm": "i am", "you're": "you are"}
 
     def split_to_sent(self, sentence: str):
         tokenized_text = sent_tokenize(sentence)
         return tokenized_text
 
     def split_to_tokens(self, sentences: str):
+        punctuations = '''!()-[]{};:\,<>./?@#$%^&*_~'''
         tokenized_text = self.split_to_sent(sentences)
         words = []
         for sent in tokenized_text:
-            words.append(word_tokenize(sent))
+            no_punct_sent = ""
+            for char in sent:
+                if char not in punctuations:
+                    no_punct_sent = no_punct_sent + char
+            words.append(no_punct_sent.split())
         return words
 
     def preprocess(self, sentences: str):
