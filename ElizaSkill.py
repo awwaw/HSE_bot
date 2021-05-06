@@ -108,3 +108,8 @@ class ElizaSkill:
 
     def match_templates(self):
         pass
+
+    def postprocess(self, tokens, dict_doctor):
+        for token in tokens:
+            if token in dict_doctor[synon]:
+                token = dict_doctor[synon]
