@@ -1,4 +1,3 @@
-import nltk
 from nltk.tokenize import sent_tokenize, word_tokenize
 from telegram.ext import Updater, CallbackContext
 from telegram import Update
@@ -18,13 +17,16 @@ class Bot:
 
     def get_message(self, update: Update, context: CallbackContext):
         message = update.message.text
-        for skill in self.skills:
-            if skill.match(message):
-                context.bot.send_message(chat_id=update.effective_chat.id,
-                                         text=skill.answer(message))
-                break
+
+        answer = str(self.preprocess(message))
+        context.bot.send_message(chat_id=update.effective_chat.id,
+                                         text=answer)
+        # for skill in self.skills:
+        #     if skill.match(message):
+        #         context.bot.send_message(chat_id=update.effective_chat.id,
+        #                                  text=skill.answer(message))
+        #         break
 
     def run(self):
         self.updater.start_polling()
         self.updater.idle()
-
