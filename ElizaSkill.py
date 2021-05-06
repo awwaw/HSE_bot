@@ -14,8 +14,17 @@ class Template:
     def match(self, sentence: List[str]) -> bool:
         pass
 
-    def apply(self, sentence: List[str], choice=None):
-        pass
+    def apply(self, sentence: List[str], template: List[str], ind: List[int]):
+        ind += [len(sentence)]
+        ans = []
+        i = 0
+        for el in template:
+            if not el.isnumeric():
+                ans.append(el)
+            else:
+                ans += sentence[ind[i]:ind[i + 1]]
+                i += 1
+        return ans
 
 
 class Rule:
@@ -108,3 +117,5 @@ class ElizaSkill:
 
     def match_templates(self):
         pass
+
+
