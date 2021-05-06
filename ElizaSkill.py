@@ -5,14 +5,16 @@ from nltk import tokenize
 templates_file = 'doctor.txt'
 
 
+class Match:
+    def __init__(self, tokens: list, indexes: list = []):
+        self.indexes = indexes
+        self.tokens = tokens
+
 class Template:
     def __init__(self, decomposition: List[str],
                  substitution: List[List[str]] = None):
         self.decomposition = decomposition
         self.substitution = substitution if substitution else []
-
-    def match(self, sentence: List[str]) -> bool:
-        pass
 
     def apply(self, sentence: List[str], template: List[str], ind: List[int]):
         ind += [len(sentence)]
@@ -26,7 +28,33 @@ class Template:
                 i += 1
         return ans
 
+    def __match(self, sentence: List[str], cur_i: int,
+              cur_j: int, begins: List[int]) -> List[Match]:
+        if (len(self.decomposition) - cur_i) * (len(sentence) - cur_j) == 0:
+            if (len(self.decomposition) - cur_i) + (len(sentence) - cur_j) == 0:
+                return [Match(sentence, begins)]
+            else:
+                return []
+        if self.decomposition[cur_i].isdigit():
+            cur = int(self.decomposition[cur_i])
+            if cur > 0:
+                if cur_j + cur <= len(sentence):
+                    return self.__match(sentence, cur_i + 1, cur_j + cur, begins + [cur_j])
+                return []
+            else:
+                list_results = []
+                for k in range(len(sentence) - cur_j):
+                    list_results += self.__match(sentence, cur_i + 1, cur_j + k, begins + [cur_j])
+                return list_results
+        else:
+            if sentence[cur_j] == self.decomposition[cur_i]:
+                return self.__match(sentence, cur_i + 1, cur_j + 1, begins + [cur_j])
+            return []
 
+    def match(self, sentence: List[str]) -> List[Match]:
+        return self.__match(sentence, 0, 0, [])
+
+      
 class Rule:
     def __init__(self, keyword: str, priority: int = 0,
                  templates: List[Template] = None):
@@ -48,7 +76,7 @@ class ElizaSkill:
 
     #  TODO
     def match(self, message: str) -> bool:
-        return False
+        return True
 
     #  TODO
     def answer(self, message: str) -> str:
@@ -94,8 +122,17 @@ class ElizaSkill:
     def split_to_sent(self, text: str) -> List[str]:
         return tokenize.sent_tokenize(text)
 
-    def split_to_tokens(self, sentence: str) -> List[str]:
-        return tokenize.word_tokenize(sentence)
+   def split_to_tokens(self, sentences: str) -> List[List[str]]:
+        punctuations = '''!()-[]{};:\,<>./?@#$%^&*_~'''
+        tokenized_text = self.split_to_sent(sentences)
+        words = []
+        for sent in tokenized_text:
+            no_punct_sent = ""
+            for char in sent:
+                if char not in punctuations:
+                    no_punct_sent = no_punct_sent + char
+            words.append(no_punct_sent.split())
+        return words
 
     def preprocess(self, text: str) -> List[List[str]]:
         tokens = [self.split_to_tokens(sentence)
@@ -117,5 +154,3 @@ class ElizaSkill:
 
     def match_templates(self):
         pass
-
-
