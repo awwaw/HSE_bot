@@ -72,7 +72,8 @@ class ElizaSkill:
         self.post = {}
         self.synonyms = {}
         self.rules = {}
-        # self.load_data(script_p)
+        self.goto_queue = {}
+        self.load_data(script_p)
 
     #  TODO
     def match(self, message: str) -> bool:
@@ -88,7 +89,10 @@ class ElizaSkill:
         with open(script_p, 'r') as file:
             for line in file.readlines():
                 s = line.strip().replace('\n', '')
-                s = re.sub(r'\s+', ' ', line)  # убрать лишние пробелы
+                s = re.sub(r'\s+', ' ', s)
+
+                if s == '':
+                    break
                 s_type, s = s.split(': ', maxsplit=1)
 
                 if s_type == 'initial':
@@ -117,12 +121,32 @@ class ElizaSkill:
                     current_template = Template(self.split_to_tokens(s))
                     current_rule.templates.append(current_template)
                 elif s_type == 'reasmb':
-                    current_template.substitution.append(s.split())
+                    tokens = s.split()
+                    if tokens[0] == 'goto':
+                        self.goto_queue[current_rule.keyword] = (tokens[1], current_template)
+                    else:
+                        current_template.substitution.append(tokens)
+
+        for keyword in self.goto_queue:
+            referred_keyword, main_template = self.goto_queue[keyword]
+            referred_rule = self.rules[referred_keyword]
+            main_decomp = main_template.decomposition
+            same_decomposition_exists = False
+            for template in referred_rule.templates:
+                if template.decomposition == main_decomp:
+                    main_template.substitution.extend(template.substitution)
+                    same_decomposition_exists = False
+                    break
+            if not same_decomposition_exists:
+                for template in referred_rule.templates:
+                    if template.decomposition == [['0']]:
+                        main_template.substitution.extend(template.substitution)
+                        break
 
     def split_to_sent(self, text: str) -> List[str]:
         return tokenize.sent_tokenize(text)
 
-   def split_to_tokens(self, sentences: str) -> List[List[str]]:
+    def split_to_tokens(self, sentences: str) -> List[List[str]]:
         punctuations = '''!()-[]{};:\,<>./?@#$%^&*_~'''
         tokenized_text = self.split_to_sent(sentences)
         words = []
