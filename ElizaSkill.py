@@ -72,7 +72,7 @@ class ElizaSkill:
         self.post = {}
         self.synonyms = {}
         self.rules = {}
-        self.load_data(script_p)
+        # self.load_data(script_p)
 
     #  TODO
     def match(self, message: str) -> bool:
@@ -154,3 +154,20 @@ class ElizaSkill:
 
     def match_templates(self):
         pass
+
+    def postprocess(self, tokens):
+        new_tokens = tokens
+        index = 0
+        for token in tokens:
+            if token in self.post.keys():
+                new_tokens[index] = self.post[token]
+            index += 1
+        new_phrase = []
+        for x in new_tokens:
+            if isinstance(x, list):
+                for i in x:
+                    new_phrase.append(i)
+            else:
+                new_phrase.append(x)
+        answer = " ".join(map(str, new_phrase))
+        return answer

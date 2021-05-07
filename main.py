@@ -5,12 +5,6 @@ import nltk
 
 def main():
     bot = Bot('')
-    template = Template(
-        ['0', 'a', '2'],
-        [[]]
-    )
-    match = template.match(['a', 'a', 'b'])[0]
-    print(match.indexes)
     bot.run()
 
 
