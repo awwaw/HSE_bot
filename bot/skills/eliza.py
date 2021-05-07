@@ -96,7 +96,6 @@ class ElizaSkill(Skill):
     def match(self, message: str) -> bool:
         return True
 
-    #  TODO
     def answer(self, message: str) -> str:
         sentences = self.preprocess(message)
         sentence = max(sentences, key=len)
@@ -206,9 +205,6 @@ class ElizaSkill(Skill):
             if token in self.rules:
                 rules.append(self.rules[token])
         return rules
-
-    def match_templates(self):
-        pass
 
     def postprocess(self, tokens: List[str], post_mask: List[bool]) -> str:
         new_tokens = []
