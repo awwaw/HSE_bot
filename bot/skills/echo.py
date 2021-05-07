@@ -1,8 +1,7 @@
-from telegram.ext import CallbackContext
-from telegram import Update
+from bot.bot import Skill
 
 
-class EchoSkill:
+class EchoSkill(Skill):
     def __init__(self):
         self.keywords = []
 

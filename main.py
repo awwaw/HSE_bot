@@ -1,10 +1,18 @@
-from bot import Bot
-from EchoSkill import EchoSkill
-from ElizaSkill import Template
 import nltk
+import sys
+
+from bot.bot import Bot
+from bot.skills.eliza import ElizaSkill
+from bot.skills.math import MathSkill
+from bot.skills.echo import EchoSkill
+
 
 def main():
-    bot = Bot('')
+    bot = Bot(sys.argv[1], [
+        MathSkill(),
+        ElizaSkill('doctor.txt'),
+        EchoSkill()
+    ])
     bot.run()
 
 

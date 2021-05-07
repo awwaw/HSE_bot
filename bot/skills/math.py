@@ -1,4 +1,7 @@
-class MathSkill:
+from bot.bot import Skill
+
+
+class MathSkill(Skill):
     def __init__(self):
         self.keywords = ['умножь', 'раздели', 'подели', 'сложи', 'плюс',
                          'минус', 'вычти', 'разность', 'частное', 'произведение', 'сумма',
@@ -22,7 +25,7 @@ class MathSkill:
                     operations.append('*')
                 elif word.lower() in ['раздели', 'подели', 'частное', 'поделить', 'делить', 'разделить']:
                     operations.append('/')
-                elif word.lower() in ['сложи', 'плюс', 'сумма', 'сложить']:
+                elif word.lower() in ['сложи', 'плюс', 'сумма', 'сложить', 'прибавь']:
                     operations.append('+')
                 else:
                     operations.append('-')

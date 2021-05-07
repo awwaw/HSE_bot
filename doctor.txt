@@ -260,7 +260,7 @@ key: no
     reasmb: Why not ?
     reasmb: Why 'no' ?
 key: my 2
-  decomp: $ 0 my 0
+  decomp: 0 my 0
     reasmb: Lets discuss further why your (2) .
     reasmb: Earlier you said your (2) .
     reasmb: But your (2) .
