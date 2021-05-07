@@ -1,9 +1,10 @@
 from bot import Bot
 from EchoSkill import EchoSkill
+from ElizaSkill import Template
 import nltk
 
 def main():
-    bot = Bot('1751454916:AAEGnqf0okA7PX5N0oeJU0MzdliJrMgtcpo')
+    bot = Bot('')
     bot.run()
 
 
