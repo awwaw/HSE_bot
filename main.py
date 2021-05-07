@@ -6,6 +6,8 @@ from bot.skills.eliza import ElizaSkill
 from bot.skills.math import MathSkill
 from bot.skills.echo import EchoSkill
 
+from datetime import datetime as dt
+
 from RF import Classifier
 
 
@@ -19,8 +21,12 @@ def main():
 
 
 if __name__ == '__main__':
-    nltk.download('punkt')
-    rf = Classifier()
+    # nltk.download('punkt')
+    rf = Classifier(max_depth=3)
     rf.prepare_data('static/documents/unique_dialogues.txt')
-    # print(rf.text)
+
+    start = dt.now()
+    rf.test()
+    end = dt.now()
+    print(end - start)
     main()

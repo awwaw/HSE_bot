@@ -1,14 +1,17 @@
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.metrics import accuracy_score
 import random
 import numpy as np
 
 
 class Classifier:
     def __init__(self, n_estimators: int = 100, max_depth: int = 5, min_samples_split: int = 2,
-                 min_samples_leaf: int = 1):
-        self.rf = RandomForestClassifier(n_estimators, max_depth, min_samples_split,
-                    min_samples_leaf, criterion='entropy')
+                 min_samples_leaf: int = 2):
+        self.rf = RandomForestClassifier(n_estimators, max_depth=max_depth)
+            # , max_depth, min_samples_split,
+            #         min_samples_leaf, criterion='entropy')
         self.text = []
         self.X = []
         self.y = []
@@ -23,7 +26,7 @@ class Classifier:
         dialogues = []
 
         text = []
-        SIZE = 3 * 10**5
+        SIZE = 10 * 10**4
 
         for line in file.readlines()[:SIZE]:
             if line != '\n':
@@ -43,7 +46,7 @@ class Classifier:
         next += next
         target += [0 for i in range(len(f))]
 
-        vectorizer = TfidfVectorizer(max_features=1000)
+        vectorizer = TfidfVectorizer(max_features=200)
         vectorizer.fit(text)
         res_repl = vectorizer.transform(first)
         res_answ = vectorizer.transform(next)
@@ -69,6 +72,15 @@ class Classifier:
             return np.array([])
         else:
             return self.rf.predict_proba(X)
+
+    def test(self):
+        X_train, X_test, y_train, y_test = train_test_split(self.X, self.y, test_size=0.3, random_state=42)
+        self.rf.fit(X_train, y_train)
+        cross_val_mean = cross_val_score(self.rf, self.X, self.y, cv=5).mean()
+        accuracy = accuracy_score(y_test, self.rf.predict(X_test))
+        print(f"Cross validation score - {cross_val_mean}")
+        print(f"Accuracy score - {accuracy}")
+        print(accuracy_score(y_train, self.rf.predict(X_train)))
 
 
 
