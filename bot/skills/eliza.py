@@ -19,6 +19,7 @@ class Template:
         self.substitution = substitutions if substitutions else []
 
     def apply(self, match: Match, choice=None):
+        post_mask = []
         if choice is None:
             choice = random.randint(0, len(self.substitution) - 1)
         begins = match.indexes + [len(match.tokens)]
@@ -26,10 +27,12 @@ class Template:
         for element in self.substitution[choice]:
             if not element.isnumeric():
                 answer.append(element)
+                post_mask.append(False)
             else:
                 i = int(element)
                 answer += match.tokens[begins[i]:begins[i + 1]]
-        return answer
+                post_mask.extend(True for _ in range(begins[i + 1] - begins[i] + 1))
+        return answer, post_mask
 
     def match(self, sentence: List[str]) -> List[Match]:
         return self.__match(sentence, 0, 0, [])
@@ -49,7 +52,7 @@ class Template:
                 return []
             else:
                 list_results = []
-                for k in range(len(sentence) - sentence_ptr):
+                for k in range(len(sentence) - sentence_ptr + 1):
                     list_results += self.__match(sentence, decomposition_ptr + 1,
                                                  sentence_ptr + k, begins + [sentence_ptr])
                 return list_results
@@ -66,6 +69,9 @@ class Rule:
         self.keyword = keyword
         self.priority = priority
         self.templates = templates if templates else []
+
+    def __lt__(self, other):
+        return self.priority < other.priority
 
     def find_template(self, decomposition):
         for template in self.templates:
@@ -92,7 +98,26 @@ class ElizaSkill(Skill):
 
     #  TODO
     def answer(self, message: str) -> str:
-        return ":("
+        sentences = self.preprocess(message)
+        sentence = max(sentences, key=len)
+
+        rules = self.find_keywords(sentence)
+        rules.sort(reverse=True)
+
+        possible_templates = []
+
+        for rule in rules:
+            for template in rule.templates:
+                match = template.match(sentence)
+                if len(match) != 0:
+                    possible_templates.append((template, random.choice(match)))
+
+        if possible_templates:
+            random_template = random.choice(possible_templates)
+            response = self.postprocess(*random_template[0].apply(random_template[1]))
+            return response
+
+        return 'Не удалось составить ответ'
 
     def load_data(self, script_p: str):
         current_rule = None
@@ -171,13 +196,13 @@ class ElizaSkill(Skill):
             result.append([])
             for token in sentence:
                 token = token.lower()
-                result[-1].append(self.pre.get(token, default=token))
+                result[-1].append(self.pre.get(token[0], token))
         return result
 
     def find_keywords(self, tokens: List[str]) -> List[Rule]:
         rules = []
         for token in tokens:
-            token = self.synonyms.get(token, default=token)
+            token = self.synonyms.get(token, token)
             if token in self.rules:
                 rules.append(self.rules[token])
         return rules
@@ -185,11 +210,18 @@ class ElizaSkill(Skill):
     def match_templates(self):
         pass
 
-    def postprocess(self, tokens):
+    def postprocess(self, tokens: List[str], post_mask: List[bool]) -> str:
         new_tokens = []
-        for token in tokens:
-            if token in self.post.keys():
+        for token in enumerate(tokens):
+            el_id, token = token
+            if token in self.post.keys() and post_mask[el_id]:
                 new_tokens.extend(self.post[token])
             else:
                 new_tokens.append(token)
-        return ' '.join(new_tokens).capitalize()
+
+        result = ' '.join(new_tokens)
+        result = re.sub(r'\. *\w', lambda x: x.group().upper(), result)
+        if not result[-1].isalpha() and result[-2] == ' ':
+            result = result[:-2] + result[-1]
+
+        return result
