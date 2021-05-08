@@ -52,29 +52,29 @@ key: apologise
     reasmb: goto sorry
 key: remember 5
   decomp: 0 i remember 0
-    reasmb: Do you often think of (2) ?
-    reasmb: Does thinking of (2) bring anything else to mind ?
+    reasmb: Do you often think of 3 ?
+    reasmb: Does thinking of 3 bring anything else to mind ?
     reasmb: What else do you recollect ?
-    reasmb: Why do you recollect (2) just now ?
-    reasmb: What in the present situation reminds you of (2) ?
-    reasmb: What is the connection between me and (2) ?
+    reasmb: Why do you recollect 3 just now ?
+    reasmb: What in the present situation reminds you of 3 ?
+    reasmb: What is the connection between me and 3 ?
   decomp: 0 do you remember 0
-    reasmb: Did you think I would forget (2) ?
-    reasmb: Why do you think I should recall (2) now ?
-    reasmb: What about (2) ?
+    reasmb: Did you think I would forget 4 ?
+    reasmb: Why do you think I should recall 4 now ?
+    reasmb: What about 4 ?
     reasmb: goto what
-    reasmb: You mentioned (2) ?
+    reasmb: You mentioned 4 ?
 key: if 3
   decomp: 0 if 0
-    reasmb: Do you think its likely that (2) ?
-    reasmb: Do you wish that (2) ?
-    reasmb: What do you know about (2) ?
-    reasmb: Really, if (2) ?
+    reasmb: Do you think its likely that 2 ?
+    reasmb: Do you wish that 2 ?
+    reasmb: What do you know about 2 ?
+    reasmb: Really, if 2 ?
 key: dreamed 4
   decomp: 0 i dreamed 0
-    reasmb: Really, (2) ?
-    reasmb: Have you ever fantasized (2) while you were awake ?
-    reasmb: Have you ever dreamed (2) before ?
+    reasmb: Really, 3 ?
+    reasmb: Have you ever fantasized 3 while you were awake ?
+    reasmb: Have you ever dreamed 3 before ?
     reasmb: goto dream
 key: dream 3
   decomp: 0
@@ -114,8 +114,8 @@ key: xforeign
     reasmb: I speak only English.
 key: hello
   decomp: 0
-    reasmb: How do you do.  Please state your problem.
-    reasmb: Hi.  What seems to be your problem ?
+    reasmb: How do you do. Please state your problem.
+    reasmb: Hi. What seems to be your problem ?
 key: computer 50
   decomp: 0
     reasmb: Do computers worry you ?
@@ -126,125 +126,123 @@ key: computer 50
     reasmb: What do you think about machines ?
 key: am
   decomp: 0 am i 0
-    reasmb: Do you believe you are (2) ?
-    reasmb: Would you want to be (2) ?
-    reasmb: Do you wish I would tell you you are (2) ?
-    reasmb: What would it mean if you were (2) ?
+    reasmb: Do you believe you are 3 ?
+    reasmb: Would you want to be 3 ?
+    reasmb: Do you wish I would tell you you are 3 ?
+    reasmb: What would it mean if you were 3 ?
     reasmb: goto what
   decomp: 0
     reasmb: Why do you say 'am' ?
     reasmb: I don't understand that.
 key: are
   decomp: 0 are you 0
-    reasmb: Why are you interested in whether I am (2) or not ?
-    reasmb: Would you prefer if I weren't (2) ?
-    reasmb: Perhaps I am (2) in your fantasies.
-    reasmb: Do you sometimes think I am (2) ?
+    reasmb: Why are you interested in whether I am 3 or not ?
+    reasmb: Would you prefer if I weren't 3 ?
+    reasmb: Perhaps I am 3 in your fantasies.
+    reasmb: Do you sometimes think I am 3 ?
     reasmb: goto what
   decomp: 0 are 0
-    reasmb: Did you think they might not be (2) ?
-    reasmb: Would you like it if they were not (2) ?
-    reasmb: What if they were not (2) ?
-    reasmb: Possibly they are (2) .
+    reasmb: Did you think they might not be 2 ?
+    reasmb: Would you like it if they were not 2 ?
+    reasmb: What if they were not 2 ?
+    reasmb: Possibly they are 2 .
 key: your
   decomp: 0 your 0
-    reasmb: Why are you concerned over my (2) ?
-    reasmb: What about your own (2) ?
-    reasmb: Are you worried about someone else's (2) ?
-    reasmb: Really, my (2) ?
+    reasmb: Why are you concerned over my 2 ?
+    reasmb: What about your own 2 ?
+    reasmb: Are you worried about someone else's 2 ?
+    reasmb: Really, my 2 ?
 key: was 2
   decomp: 0 was i 0
-    reasmb: What if you were (2) ?
-    reasmb: Do you think you were (2) ?
-    reasmb: Were you (2) ?
-    reasmb: What would it mean if you were (2) ?
-    reasmb: What does (2) suggest to you ?
+    reasmb: What if you were 3 ?
+    reasmb: Do you think you were 3 ?
+    reasmb: Were you 3 ?
+    reasmb: What would it mean if you were 3 ?
+    reasmb: What does 3 suggest to you ?
     reasmb: goto what
   decomp: 0 i was 0
     reasmb: Were you really ?
-    reasmb: Why do you tell me you were (2) now ?
-    reasmb: Perhaps I already know you were (2) .
+    reasmb: Why do you tell me you were 3 now ?
+    reasmb: Perhaps I already know you were 3 .
   decomp: 0 was you 0
-    reasmb: Would you like to believe I was (2) ?
-    reasmb: What suggests that I was (2) ?
+    reasmb: Would you like to believe I was 3 ?
+    reasmb: What suggests that I was 3 ?
     reasmb: What do you think ?
-    reasmb: Perhaps I was (2) .
-    reasmb: What if I had been (2) ?
+    reasmb: Perhaps I was 3 .
+    reasmb: What if I had been 3 ?
 key: i
   decomp: 0 i @desire 0
-    reasmb: What would it mean to you if you got (3) ?
-    reasmb: Why do you want (3) ?
-    reasmb: Suppose you got (3) soon ?
-    reasmb: What if you never got (3) ?
-    reasmb: What would getting (3) mean to you ?
-    reasmb: What does wanting (3) have to do with this discussion ?
+    reasmb: What would it mean to you if you got 3 ?
+    reasmb: Why do you want 3 ?
+    reasmb: Suppose you got 3 soon ?
+    reasmb: What if you never got 3 ?
+    reasmb: What would getting 3 mean to you ?
+    reasmb: What does wanting 3 have to do with this discussion ?
   decomp: 0 i am 0 @sad 0
-    reasmb: I am sorry to hear that you are (3) .
-    reasmb: Do you think that coming here will help you not to be (3) ?
-    reasmb: I'm sure it's not pleasant to be (3) .
-    reasmb: Can you explain what made you (3) ?
+    reasmb: I am sorry to hear that you are 4 .
+    reasmb: Do you think that coming here will help you not to be 4 ?
+    reasmb: I'm sure it's not pleasant to be 4 .
+    reasmb: Can you explain what made you 4 ?
   decomp: 0 i am 0 @happy 0
-    reasmb: How have I helped you to be (3) ?
-    reasmb: Has your treatment made you (3) ?
-    reasmb: What makes you (3) just now ?
-    reasmb: Can you explan why you are suddenly (3) ?
+    reasmb: How have I helped you to be 4 ?
+    reasmb: Has your treatment made you 4 ?
+    reasmb: What makes you 4 just now ?
+    reasmb: Can you explan why you are suddenly 4 ?
   decomp: 0 i was 0
     reasmb: goto was
   decomp: 0 i @belief 0 i 0
     reasmb: Do you really think so ?
-    reasmb: But you are not sure you (3) .
-    reasmb: Do you really doubt you (3) ?
-  decomp: 0 i 0 @belief 0 you 0
-    reasmb: goto you
+    reasmb: But you are not sure you 3 .
+    reasmb: Do you really doubt you 3 ?
   decomp: 0 i am 0
-    reasmb: Is it because you are (2) that you came to me ?
-    reasmb: How long have you been (2) ?
-    reasmb: Do you believe it is normal to be (2) ?
-    reasmb: Do you enjoy being (2) ?
+    reasmb: Is it because you are 3 that you came to me ?
+    reasmb: How long have you been 3 ?
+    reasmb: Do you believe it is normal to be 3 ?
+    reasmb: Do you enjoy being 3 ?
   decomp: 0 i @cannot 0
-    reasmb: How do you think that you can't (3) ?
+    reasmb: How do you think that you can't 3 ?
     reasmb: Have you tried ?
-    reasmb: Perhaps you could (3) now.
-    reasmb: Do you really want to be able to (3) ?
+    reasmb: Perhaps you could 3 now.
+    reasmb: Do you really want to be able to 3 ?
   decomp: 0 i don't 0
-    reasmb: Don't you really (2) ?
-    reasmb: Why don't you (2) ?
-    reasmb: Do you wish to be able to (2) ?
+    reasmb: Don't you really 3 ?
+    reasmb: Why don't you 3 ?
+    reasmb: Do you wish to be able to 3 ?
     reasmb: Does that trouble you ?
   decomp: 0 do i feel 0
     reasmb: Tell me more about such feelings.
-    reasmb: Do you often feel (2) ?
-    reasmb: Do you enjoy feeling (2) ?
-    reasmb: Of what does feeling (2) remind you ?
+    reasmb: Do you often feel 4 ?
+    reasmb: Do you enjoy feeling 4 ?
+    reasmb: Of what does feeling 4 remind you ?
   decomp: 0 i 0 you 0
-    reasmb: Perhaps in your fantasies we (2) each other.
-    reasmb: Do you wish to (2) me ?
-    reasmb: You seem to need to (2) me.
-    reasmb: Do you (2) anyone else ?
+    reasmb: Perhaps in your fantasies we 2 each other.
+    reasmb: Do you wish to 2 me ?
+    reasmb: You seem to need to 2 me.
+    reasmb: Do you 2 anyone else ?
   decomp: 0
-    reasmb: You say (1) ?
+    reasmb: You say 0 ?
     reasmb: Can you elaborate on that ?
-    reasmb: Do you say (1) for some special reason ?
+    reasmb: Do you say 0 for some special reason ?
     reasmb: That's quite interesting.
 key: you
   decomp: 0 you remind me of 0
     reasmb: goto alike
   decomp: 0 you are 0
-    reasmb: What makes you think I am (2) ?
-    reasmb: Does it please you to believe I am (2) ?
-    reasmb: Do you sometimes wish you were (2) ?
-    reasmb: Perhaps you would like to be (2) .
+    reasmb: What makes you think I am 3 ?
+    reasmb: Does it please you to believe I am 3 ?
+    reasmb: Do you sometimes wish you were 3 ?
+    reasmb: Perhaps you would like to be 3 .
   decomp: 0 you 0 me 0
-    reasmb: Why do you think I (2) you ?
-    reasmb: You like to think I (2) you -- don't you ?
-    reasmb: What makes you think I (2) you ?
-    reasmb: Really, I (2) you ?
-    reasmb: Do you wish to believe I (2) you ?
-    reasmb: Suppose I did (2) you -- what would that mean ?
-    reasmb: Does someone else believe I (2) you ?
+    reasmb: Why do you think I 2 you ?
+    reasmb: You like to think I 2 you -- don't you ?
+    reasmb: What makes you think I 2 you ?
+    reasmb: Really, I 2 you ?
+    reasmb: Do you wish to believe I 2 you ?
+    reasmb: Suppose I did 2 you -- what would that mean ?
+    reasmb: Does someone else believe I 2 you ?
   decomp: 0 you 0
     reasmb: We were discussing you -- not me.
-    reasmb: Oh, I (2) ?
+    reasmb: Oh, I 2 ?
     reasmb: You're not really talking about me -- are you ?
     reasmb: What are your feelings now ?
 key: yes
@@ -261,30 +259,30 @@ key: no
     reasmb: Why 'no' ?
 key: my 2
   decomp: 0 my 0
-    reasmb: Lets discuss further why your (2) .
-    reasmb: Earlier you said your (2) .
-    reasmb: But your (2) .
-    reasmb: Does that have anything to do with the fact that your (2) ?
+    reasmb: Lets discuss further why your 2 .
+    reasmb: Earlier you said your 2 .
+    reasmb: But your 2 .
+    reasmb: Does that have anything to do with the fact that your 2 ?
   decomp: 0 my 0 @family 0
     reasmb: Tell me more about your family.
-    reasmb: Who else in your family (4) ?
-    reasmb: Your (3) ?
-    reasmb: What else comes to mind when you think of your (3) ?
+    reasmb: Who else in your family 4 ?
+    reasmb: Your 3 ?
+    reasmb: What else comes to mind when you think of your 3 ?
   decomp: 0 my 0
-    reasmb: Your (2) ?
-    reasmb: Why do you say your (2) ?
+    reasmb: Your 2 ?
+    reasmb: Why do you say your 2 ?
     reasmb: Does that suggest anything else which belongs to you ?
-    reasmb: Is it important that your (2) ?
+    reasmb: Is it important that your 2 ?
 key: can
   decomp: 0 can you 0
-    reasmb: You believe I can (2) don't you ?
+    reasmb: You believe I can 3 don't you ?
     reasmb: goto what
-    reasmb: You want me to be able to (2) .
-    reasmb: Perhaps you would like to be able to (2) yourself.
+    reasmb: You want me to be able to 3 .
+    reasmb: Perhaps you would like to be able to 3 yourself.
   decomp: 0 can i 0
-    reasmb: Whether or not you can (2) depends on you more than me.
-    reasmb: Do you want to be able to (2) ?
-    reasmb: Perhaps you don't want to (2) .
+    reasmb: Whether or not you can 3 depends on you more than me.
+    reasmb: Do you want to be able to 3 ?
+    reasmb: Perhaps you don't want to 3 .
     reasmb: goto what
 key: what
   decomp: 0
@@ -305,23 +303,23 @@ key: because
     reasmb: What other reasons might there be ?
 key: why
   decomp: 0 why don't you 0
-    reasmb: Do you believe I don't (2) ?
-    reasmb: Perhaps I will (2) in good time.
-    reasmb: Should you (2) yourself ?
-    reasmb: You want me to (2) ?
+    reasmb: Do you believe I don't 4 ?
+    reasmb: Perhaps I will 4 in good time.
+    reasmb: Should you 4 yourself ?
+    reasmb: You want me to 4 ?
     reasmb: goto what
   decomp: 0 why can't i 0
-    reasmb: Do you think you should be able to (2) ?
-    reasmb: Do you want to be able to (2) ?
-    reasmb: Do you believe this will help you to (2) ?
-    reasmb: Have you any idea why you can't (2) ?
+    reasmb: Do you think you should be able to 4 ?
+    reasmb: Do you want to be able to 4 ?
+    reasmb: Do you believe this will help you to 4 ?
+    reasmb: Have you any idea why you can't 4 ?
     reasmb: goto what
   decomp: 0
     reasmb: goto what
 key: everyone 2
   decomp: 0 @everyone 0
-    reasmb: Realy, (2) ?
-    reasmb: Surely not (2) .
+    reasmb: Realy, 1 ?
+    reasmb: Surely not 1 .
     reasmb: Can you think of anyone in particular ?
     reasmb: Who, for example?
     reasmb: Are you thinking of a very special person ?
@@ -330,14 +328,38 @@ key: everyone 2
     reasmb: You have a particular person in mind, don't you ?
     reasmb: Who do you think you're talking about ?
 key: everybody 2
-  decomp: 0
-    reasmb: goto everyone
+  decomp: 0 @everyone 0
+    reasmb: Realy, 1 ?
+    reasmb: Surely not 1 .
+    reasmb: Can you think of anyone in particular ?
+    reasmb: Who, for example?
+    reasmb: Are you thinking of a very special person ?
+    reasmb: Who, may I ask ?
+    reasmb: Someone special perhaps ?
+    reasmb: You have a particular person in mind, don't you ?
+    reasmb: Who do you think you're talking about ?
 key: nobody 2
-  decomp: 0
-    reasmb: goto everyone
+  decomp: 0 @everyone 0
+    reasmb: Realy, 1 ?
+    reasmb: Surely not 1 .
+    reasmb: Can you think of anyone in particular ?
+    reasmb: Who, for example?
+    reasmb: Are you thinking of a very special person ?
+    reasmb: Who, may I ask ?
+    reasmb: Someone special perhaps ?
+    reasmb: You have a particular person in mind, don't you ?
+    reasmb: Who do you think you're talking about ?
 key: noone 2
-  decomp: 0
-    reasmb: goto everyone
+  decomp: 0 @everyone 0
+    reasmb: Realy, 1 ?
+    reasmb: Surely not 1 .
+    reasmb: Can you think of anyone in particular ?
+    reasmb: Who, for example?
+    reasmb: Are you thinking of a very special person ?
+    reasmb: Who, may I ask ?
+    reasmb: Someone special perhaps ?
+    reasmb: You have a particular person in mind, don't you ?
+    reasmb: Who do you think you're talking about ?
 key: always 1
   decomp: 0
     reasmb: Can you think of a specific example ?
@@ -357,4 +379,3 @@ key: alike 10
 key: like 10
   decomp: 0 @be 0 like 0
     reasmb: goto alike
-   
