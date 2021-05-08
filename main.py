@@ -10,7 +10,7 @@ from bot.skills.echo import EchoSkill
 def main():
     bot = Bot(sys.argv[1], [
         MathSkill(),
-        ElizaSkill('doctor.txt'),
+        ElizaSkill('good_doctor.txt'),
         EchoSkill()
     ])
     bot.run()
