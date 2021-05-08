@@ -194,8 +194,6 @@ key: i
     reasmb: Do you really think so ?
     reasmb: But you are not sure you 3 .
     reasmb: Do you really doubt you 3 ?
-  decomp: 0 i 0 @belief 0 you 0
-    reasmb: goto you
   decomp: 0 i am 0
     reasmb: Is it because you are 3 that you came to me ?
     reasmb: How long have you been 3 ?
@@ -330,14 +328,38 @@ key: everyone 2
     reasmb: You have a particular person in mind, don't you ?
     reasmb: Who do you think you're talking about ?
 key: everybody 2
-  decomp: 0
-    reasmb: goto everyone
+  decomp: 0 @everyone 0
+    reasmb: Realy, 1 ?
+    reasmb: Surely not 1 .
+    reasmb: Can you think of anyone in particular ?
+    reasmb: Who, for example?
+    reasmb: Are you thinking of a very special person ?
+    reasmb: Who, may I ask ?
+    reasmb: Someone special perhaps ?
+    reasmb: You have a particular person in mind, don't you ?
+    reasmb: Who do you think you're talking about ?
 key: nobody 2
-  decomp: 0
-    reasmb: goto everyone
+  decomp: 0 @everyone 0
+    reasmb: Realy, 1 ?
+    reasmb: Surely not 1 .
+    reasmb: Can you think of anyone in particular ?
+    reasmb: Who, for example?
+    reasmb: Are you thinking of a very special person ?
+    reasmb: Who, may I ask ?
+    reasmb: Someone special perhaps ?
+    reasmb: You have a particular person in mind, don't you ?
+    reasmb: Who do you think you're talking about ?
 key: noone 2
-  decomp: 0
-    reasmb: goto everyone
+  decomp: 0 @everyone 0
+    reasmb: Realy, 1 ?
+    reasmb: Surely not 1 .
+    reasmb: Can you think of anyone in particular ?
+    reasmb: Who, for example?
+    reasmb: Are you thinking of a very special person ?
+    reasmb: Who, may I ask ?
+    reasmb: Someone special perhaps ?
+    reasmb: You have a particular person in mind, don't you ?
+    reasmb: Who do you think you're talking about ?
 key: always 1
   decomp: 0
     reasmb: Can you think of a specific example ?

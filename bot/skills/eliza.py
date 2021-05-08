@@ -22,6 +22,8 @@ class Template:
 
     def apply(self, match: Match, choice=None):
         post_mask = []
+        if len(self.substitution) == 0:
+            print(self.decomposition)
         if choice is None:
             choice = random.randint(0, len(self.substitution) - 1)
         begins = match.indexes + [len(match.tokens)]
@@ -168,6 +170,7 @@ class ElizaSkill(Skill):
                         goto_links[current_template] = tokens[1]
                     else:
                         current_template.substitution.append(tokens)
+        self.__handle_goto(goto_links)
 
     def __handle_goto(self, goto_links: Dict[Template, str]):
 
@@ -175,6 +178,7 @@ class ElizaSkill(Skill):
 
         def __substitute_goto(keyword, template):
             linked = self.rules[keyword].find_template(template.decomposition)
+            print(keyword, template.decomposition)
             if not linked:
                 linked = self.rules[keyword].find_template(['0'])
             if linked in goto_links and linked not in ready_templates:
