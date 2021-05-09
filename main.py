@@ -9,9 +9,6 @@ from bot.skills.pushkin import PushkinSkill
 
 from datetime import datetime as dt
 
-from RF import Classifier
-
-
 def main():
     bot = Bot(sys.argv[1], [
         MathSkill(),
