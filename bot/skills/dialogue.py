@@ -1,5 +1,5 @@
 import torch
-from torch import nn
+from torch import nn, sigmoid
 from transformers import BertModel, BertTokenizer
 from bot.bot import Skill
 from bot.skills.pushkin import DialoguesBase, PushkinSkill
@@ -30,7 +30,7 @@ class DialogueSkill(Skill):
         data = self.bert_tokenizer([sequence] * 20, text_pair=candidates, return_tensors='pt',
                                    max_length=64, padding='max_length', truncation=True)
         res = self.bert_model(**data)
-        predictions = self.model(res.pooler_output).detach().numpy()
+        predictions = sigmoid(self.model(res.pooler_output)).detach().numpy()
         mx = [-1, -1]
         for i in range(len(predictions)):
             if predictions[i] > mx[0]:
