@@ -54,6 +54,16 @@ class Classifier:
         print(res_repl.shape, res_answ.shape, np.array(target).shape)
         self.X = np.concatenate([res_repl.toarray(), res_answ.toarray()], axis=1)
         self.y = np.array(target)
+        XY = np.random.permutation(range(len(self.X)))
+        _x = self.X
+        _y = self.y
+        self.X = []
+        self.y = []
+        for i in range(len(XY)):
+            self.X.append(_x[i])
+            self.y.append(_y[i])
+        self.X = np.array(self.X)
+        self.y = np.array(self.y)
 
     def fit(self):
         self.rf.fit(self.X, self.y)

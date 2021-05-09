@@ -1,3 +1,6 @@
 python-telegram-bot
 nltk
 scikit-learn
+transformers
+torch
+torchvision
