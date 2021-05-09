@@ -101,7 +101,15 @@ class ElizaSkill(Skill):
             self.load_data(script_p)
 
     def match(self, message: str) -> bool:
-        return True
+        english_symbols = 0
+        for symbol in message:
+            if 'a' <= symbol <= 'z' or 'A' <= symbol <= 'Z':
+                english_symbols += 1
+
+        if english_symbols / len(message) > 0.5:
+            return True
+
+        return False
 
     def answer(self, message: str) -> str:
         sentences = self.preprocess(message)
