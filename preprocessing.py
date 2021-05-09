@@ -1,14 +1,18 @@
 import re
 import sys
 from typing import List
+from nltk.stem.snowball import RussianStemmer
 
 
 def tokenize(src_path: str, dst_path: str):
     lines = load_lines(src_path)
 
     result = []
-
-    # TODO apply tokenization
+    non_letters = re.compile(r'[^a-zA-Zа-яА-Яе-ё ]')
+    for line in lines:
+        line = non_letters.sub(' ', line)
+        tokens = line.strip().lower().split()
+        result.append(' '.join(tokens))
 
     store_lines(dst_path, result)
 
@@ -25,14 +29,15 @@ def apply_lemmatization(src_path: str, dst_path: str):
 
 def apply_stemming(src_path: str, dst_path: str):
     lines = load_lines(src_path)
-
+    stemmer = RussianStemmer()
     result = []
-    non_letters = re.compile(r'[^a-zA-Zа-яА-Яе-ё ]')
-    for line in lines:
-        line = non_letters.sub(' ', line)
-        tokens = line.strip().lower().split()
-        result.append(' '.join(tokens))
-
+    for sentence in lines:
+        stemmed = []
+        p = re.compile(r'[^a-zA-Zа-яА-Яе-ё ]')
+        words = p.sub(' ', sentence).split()
+        for word in words:
+            stemmed.append(stemmer.stem(word))
+        result.append(" ".join(stemmed))
     store_lines(dst_path, result)
 
 
