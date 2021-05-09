@@ -6,12 +6,14 @@ from bot.skills.eliza import ElizaSkill
 from bot.skills.math import MathSkill
 from bot.skills.echo import EchoSkill
 from bot.skills.pushkin import PushkinSkill
+from bot.skills.dialogue import DialogueSkill
 
 
 def main():
     bot = Bot(sys.argv[1], [
         MathSkill(),
-        PushkinSkill('save_state.tmp'),
+        PushkinSkill('static/documents/save_state.tmp'),
+        DialogueSkill(),
         ElizaSkill('good_doctor.txt'),
         EchoSkill()
     ])
