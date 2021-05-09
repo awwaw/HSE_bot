@@ -1,7 +1,7 @@
 import pickle
 import re
 import random
-
+from preprocessing import load_lines
 from nltk.stem.snowball import RussianStemmer
 
 from bot.bot import Skill
@@ -14,25 +14,29 @@ import time
 
 class DialoguesBase:
     def __init__(self):
-        self.vectorizer = TfidfVectorizer(decode_error="ignore", max_features=20)
-        self.neigh = NearestNeighbors()
+        self.vectorizer = TfidfVectorizer(decode_error="ignore", max_features=10000, min_df=2, max_df=15000, ngram_range=(1, 3))
+        self.neigh = NearestNeighbors(n_jobs=-1)
         self.requests: []
         self.responses: []
 
     def fit(self, requests: str, responses: str):
-        start = time.time()
-        self.requests = self.load(requests)
-        self.responses = self.load(responses)
+        self.requests = load_lines(requests)
+        self.responses = load_lines(responses)
         self.neigh.fit(self.vectorizer.fit_transform(self.requests))
-        end = time.time()
-        print(end - start)
 
-    def get_candidate(self, request: str, k=1) -> List[str]:
+    def get_candidate(self, request: str, k=1):
+        # start = time.time()
 
-        neigh_ind = self.neigh.kneighbors(request, n_neighbors=k, return_distance=False)
+        request = self.apply_stemming(request)
+        rq_mtrx = self.vectorizer.transform([request])
+        # print(rq_mtrx)
+        neigh_ind = self.neigh.kneighbors(rq_mtrx, n_neighbors=k, return_distance=False)
         result = []
         for ind in neigh_ind[0]:
             result.append(self.responses[ind])
+
+        end = time.time()
+        # print(end - start)
         return result
 
     def dump(self, dst_path: str):
@@ -62,11 +66,9 @@ class PushkinSkill(Skill):
         return True
 
     def answer(self, message: str) -> str:
-        return random.choice(self.base.get_candidate(message, 5))
+        return random.choice(self.base.get_candidate(message, 10))
 
 
-db = DialoguesBase()
-db.fit("../../stemmed.txt", "../../responses.txt")
-db.dump("../../save.tmp")
-skill = PushkinSkill("../../save.tmp")
-print(skill.answer("Пока, толстуха!"))
+# db = DialoguesBase()
+# db.fit("stemmed.txt", "responses.txt")
+# db.dump("save_state.tmp")
