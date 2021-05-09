@@ -5,11 +5,13 @@ from bot.bot import Bot
 from bot.skills.eliza import ElizaSkill
 from bot.skills.math import MathSkill
 from bot.skills.echo import EchoSkill
+from bot.skills.pushkin import PushkinSkill
 
 
 def main():
     bot = Bot(sys.argv[1], [
         MathSkill(),
+        PushkinSkill('save_state.tmp'),
         ElizaSkill('good_doctor.txt'),
         EchoSkill()
     ])

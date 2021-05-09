@@ -31,9 +31,9 @@ def apply_stemming(src_path: str, dst_path: str):
     lines = load_lines(src_path)
     stemmer = RussianStemmer()
     result = []
+    p = re.compile(r'[!()\-\[\]{};:\\,<>./?@#$%^&*_~]')
     for sentence in lines:
         stemmed = []
-        p = re.compile(r'[^a-zA-Zа-яА-Яе-ё ]')
         words = p.sub(' ', sentence).split()
         for word in words:
             stemmed.append(stemmer.stem(word))
