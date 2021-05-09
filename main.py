@@ -12,8 +12,8 @@ from bot.skills.dialogue import DialogueSkill
 def main():
     bot = Bot(sys.argv[1], [
         MathSkill(),
-        PushkinSkill('save_state.tmp'),
         DialogueSkill(),
+        PushkinSkill('static/documents/save_state.tmp'),
         ElizaSkill('good_doctor.txt'),
         EchoSkill()
     ])
