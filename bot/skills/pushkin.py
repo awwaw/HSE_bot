@@ -63,7 +63,15 @@ class PushkinSkill(Skill):
         self.base = DialoguesBase.load(data_path)
 
     def match(self, message: str) -> bool:
-        return True
+        english_symbols = 0
+        for symbol in message:
+            if ('a' <= symbol <= 'z' or 'A' <= symbol <= 'Z') and symbol != ' ':
+                english_symbols += 1
+
+        if english_symbols / len(message) <= 0.5:
+            return True
+
+        return False
 
     def answer(self, message: str) -> str:
         return random.choice(self.base.get_candidate(message, 10))
