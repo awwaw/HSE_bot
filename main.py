@@ -5,6 +5,7 @@ from bot.bot import Bot
 from bot.skills.eliza import ElizaSkill
 from bot.skills.math import MathSkill
 from bot.skills.echo import EchoSkill
+from bot.skills.pushkin import PushkinSkill
 
 from datetime import datetime as dt
 
@@ -14,7 +15,8 @@ from RF import Classifier
 def main():
     bot = Bot(sys.argv[1], [
         MathSkill(),
-        ElizaSkill('doctor.txt'),
+        PushkinSkill('save_state.tmp'),
+        ElizaSkill('good_doctor.txt'),
         EchoSkill()
     ])
     bot.run()

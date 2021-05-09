@@ -14,11 +14,16 @@ class Match:
 
 class Template:
     def __init__(self, decomposition: List[str],
-                 substitutions: List[List[str]] = None):
+                 substitutions: List[List[str]] = None,
+                 synonyms: Dict[str, str] = None):
         self.decomposition = decomposition
         self.substitution = substitutions if substitutions else []
+        self.synonyms = synonyms if synonyms else {}
 
     def apply(self, match: Match, choice=None):
+        post_mask = []
+        if len(self.substitution) == 0:
+            print(self.decomposition)
         if choice is None:
             choice = random.randint(0, len(self.substitution) - 1)
         begins = match.indexes + [len(match.tokens)]
@@ -26,10 +31,12 @@ class Template:
         for element in self.substitution[choice]:
             if not element.isnumeric():
                 answer.append(element)
+                post_mask.append(False)
             else:
                 i = int(element)
                 answer += match.tokens[begins[i]:begins[i + 1]]
-        return answer
+                post_mask.extend(True for _ in range(begins[i + 1] - begins[i] + 1))
+        return answer, post_mask
 
     def match(self, sentence: List[str]) -> List[Match]:
         return self.__match(sentence, 0, 0, [])
@@ -40,8 +47,9 @@ class Template:
             return [Match(sentence, begins)]
         if decomposition_ptr == len(self.decomposition) or sentence_ptr == len(sentence):
             return []
-        if self.decomposition[decomposition_ptr].isdigit():
-            cur = int(self.decomposition[decomposition_ptr])
+        decomposition_rule = self.decomposition[decomposition_ptr]
+        if decomposition_rule.isdigit():
+            cur = int(decomposition_rule)
             if cur > 0:
                 if sentence_ptr + cur <= len(sentence):
                     return self.__match(sentence, decomposition_ptr + 1,
@@ -49,12 +57,17 @@ class Template:
                 return []
             else:
                 list_results = []
-                for k in range(len(sentence) - sentence_ptr):
+                for k in range(len(sentence) - sentence_ptr + 1):
                     list_results += self.__match(sentence, decomposition_ptr + 1,
                                                  sentence_ptr + k, begins + [sentence_ptr])
                 return list_results
+        elif decomposition_rule.startswith('@'):
+            if self.synonyms.get(sentence[sentence_ptr], '') == decomposition_rule[1:]:
+                return self.__match(sentence, decomposition_ptr + 1,
+                                    sentence_ptr + 1, begins + [sentence_ptr])
+            return []
         else:
-            if sentence[sentence_ptr] == self.decomposition[decomposition_ptr]:
+            if sentence[sentence_ptr] == decomposition_rule:
                 return self.__match(sentence, decomposition_ptr + 1,
                                     sentence_ptr + 1, begins + [sentence_ptr])
             return []
@@ -81,7 +94,7 @@ class ElizaSkill(Skill):
         self.quits: List[str] = []
         self.pre: Dict[str, List[str]] = {}
         self.post: Dict[str, List[str]] = {}
-        self.synonyms: Dict[str, List[str]] = {}
+        self.synonyms: Dict[str, str] = {}
         self.rules: Dict[str, Rule] = {}
 
         if script_p is not None:
@@ -90,9 +103,28 @@ class ElizaSkill(Skill):
     def match(self, message: str) -> bool:
         return True
 
-    #  TODO
     def answer(self, message: str) -> str:
-        return ":("
+        sentences = self.preprocess(message)
+        sentence = max(sentences, key=len)
+
+        rules = self.find_keywords(sentence)
+        rules.sort(reverse=True, key=lambda x: x.priority)
+
+        possible_templates = []
+
+        for rule in rules:
+            for template in rule.templates:
+                match = template.match(sentence)
+                if len(match) != 0:
+                    possible_templates.append((template, random.choice(match)))
+
+        if possible_templates:
+            random_template = random.choice(possible_templates)
+            message, mask = random_template[0].apply(random_template[1])
+            response = self.postprocess(message, mask)
+            return response
+
+        return 'Я вас не поняла :('
 
     def load_data(self, script_p: str):
         current_rule = None
@@ -130,7 +162,7 @@ class ElizaSkill(Skill):
                     current_template = None
                     self.rules[current_rule.keyword] = current_rule
                 elif s_type == 'decomp':
-                    current_template = Template(s.split())
+                    current_template = Template(s.split(), synonyms=self.synonyms)
                     current_rule.templates.append(current_template)
                 elif s_type == 'reasmb':
                     tokens = s.split()
@@ -138,6 +170,7 @@ class ElizaSkill(Skill):
                         goto_links[current_template] = tokens[1]
                     else:
                         current_template.substitution.append(tokens)
+        self.__handle_goto(goto_links)
 
     def __handle_goto(self, goto_links: Dict[Template, str]):
 
@@ -145,6 +178,7 @@ class ElizaSkill(Skill):
 
         def __substitute_goto(keyword, template):
             linked = self.rules[keyword].find_template(template.decomposition)
+            print(keyword, template.decomposition)
             if not linked:
                 linked = self.rules[keyword].find_template(['0'])
             if linked in goto_links and linked not in ready_templates:
@@ -171,25 +205,28 @@ class ElizaSkill(Skill):
             result.append([])
             for token in sentence:
                 token = token.lower()
-                result[-1].append(self.pre.get(token, default=token))
+                result[-1].append(self.pre.get(token[0], token))
         return result
 
     def find_keywords(self, tokens: List[str]) -> List[Rule]:
         rules = []
         for token in tokens:
-            token = self.synonyms.get(token, default=token)
+            token = self.synonyms.get(token, token)
             if token in self.rules:
                 rules.append(self.rules[token])
         return rules
 
-    def match_templates(self):
-        pass
-
-    def postprocess(self, tokens):
+    def postprocess(self, tokens: List[str], post_mask: List[bool]) -> str:
         new_tokens = []
-        for token in tokens:
-            if token in self.post.keys():
+        for el_id, token in enumerate(tokens):
+            if token in self.post.keys() and post_mask[el_id]:
                 new_tokens.extend(self.post[token])
             else:
                 new_tokens.append(token)
-        return ' '.join(new_tokens).capitalize()
+
+        result = ' '.join(new_tokens).capitalize()
+        result = re.sub(r'[.!?] *\w', lambda x: x.group().upper(), result)
+        if not result[-1].isalpha() and result[-2] == ' ':
+            result = result[:-2] + result[-1]
+
+        return result
