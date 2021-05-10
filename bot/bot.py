@@ -23,12 +23,15 @@ class Bot:
         self.skills = skills
 
     def get_message(self, update: Update, context: CallbackContext):
-        message = update.message.text
-        for skill in self.skills:
-            if skill.match(message):
-                context.bot.send_message(chat_id=update.effective_chat.id,
+        try:
+            message = update.message.text
+            for skill in self.skills:
+                if skill.match(message):
+                    context.bot.send_message(chat_id=update.effective_chat.id,
                                          text=skill.answer(message))
-                break
+                    break
+        except Exception as e:
+            print(e)
 
     def run(self):
         self.updater.start_polling()

@@ -1,20 +1,22 @@
 import pickle
-import re
 import random
-from preprocessing import load_lines
+import re
+import time
+
 from nltk.stem.snowball import RussianStemmer
-
-from bot.bot import Skill
-from typing import List
-
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neighbors import NearestNeighbors
-import time
+
+from bot.bot import Skill
+from preprocessing import load_lines
 
 
 class DialoguesBase:
     def __init__(self):
-        self.vectorizer = TfidfVectorizer(decode_error="ignore", max_features=10000, min_df=2, max_df=15000, ngram_range=(1, 3))
+        self.vectorizer = TfidfVectorizer(decode_error="ignore",
+                                          max_features=10000,
+                                          min_df=2, max_df=15000,
+                                          ngram_range=(1, 3))
         self.neigh = NearestNeighbors(n_jobs=-1)
         self.requests: []
         self.responses: []
@@ -25,18 +27,14 @@ class DialoguesBase:
         self.neigh.fit(self.vectorizer.fit_transform(self.requests))
 
     def get_candidate(self, request: str, k=1):
-        # start = time.time()
 
         request = self.apply_stemming(request)
-        rq_mtrx = self.vectorizer.transform([request])
-        # print(rq_mtrx)
-        neigh_ind = self.neigh.kneighbors(rq_mtrx, n_neighbors=k, return_distance=False)
+        data = self.vectorizer.transform([request])
+        neigh_ind = self.neigh.kneighbors(data, n_neighbors=k, return_distance=False)
         result = []
         for ind in neigh_ind[0]:
             result.append(self.responses[ind])
 
-        end = time.time()
-        # print(end - start)
         return result
 
     def dump(self, dst_path: str):
@@ -63,20 +61,11 @@ class PushkinSkill(Skill):
         self.base = DialoguesBase.load(data_path)
 
     def match(self, message: str) -> bool:
-        english_symbols = 0
-        for symbol in message:
-            if ('a' <= symbol <= 'z' or 'A' <= symbol <= 'Z') and symbol != ' ':
-                english_symbols += 1
-
-        if english_symbols / len(message) <= 0.5:
-            return True
-
-        return False
+        if message[0] == '@':
+            return message.startswith('@pushkin')
+        return len(re.sub(r'[^а-яА-ЯёЁ 0-9]', '', message)) > 0.6 * len(message)
 
     def answer(self, message: str) -> str:
+        if message.startswith('@pushkin'):
+            message = message[8:].strip()
         return random.choice(self.base.get_candidate(message, 10))
-
-
-# db = DialoguesBase()
-# db.fit("stemmed.txt", "responses.txt")
-# db.dump("save_state.tmp")

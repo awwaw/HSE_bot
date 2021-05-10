@@ -22,8 +22,6 @@ class Template:
 
     def apply(self, match: Match, choice=None):
         post_mask = []
-        if len(self.substitution) == 0:
-            print(self.decomposition)
         if choice is None:
             choice = random.randint(0, len(self.substitution) - 1)
         begins = match.indexes + [len(match.tokens)]
@@ -101,17 +99,13 @@ class ElizaSkill(Skill):
             self.load_data(script_p)
 
     def match(self, message: str) -> bool:
-        english_symbols = 0
-        for symbol in message:
-            if 'a' <= symbol <= 'z' or 'A' <= symbol <= 'Z':
-                english_symbols += 1
-
-        if english_symbols / len(message) > 0.5:
-            return True
-
-        return False
+        if message[0] == '@':
+            return message.startswith('@eliza')
+        return len(re.sub(r'[^a-zA-Z 0-9]', '', message)) > 0.6 * len(message)
 
     def answer(self, message: str) -> str:
+        if message.startswith('@eliza'):
+            message = message[6:].strip()
         sentences = self.preprocess(message)
         sentence = max(sentences, key=len)
 
@@ -132,7 +126,7 @@ class ElizaSkill(Skill):
             response = self.postprocess(message, mask)
             return response
 
-        return 'Я вас не поняла :('
+        return 'Lets talk about something else'
 
     def load_data(self, script_p: str):
         current_rule = None
@@ -186,7 +180,6 @@ class ElizaSkill(Skill):
 
         def __substitute_goto(keyword, template):
             linked = self.rules[keyword].find_template(template.decomposition)
-            print(keyword, template.decomposition)
             if not linked:
                 linked = self.rules[keyword].find_template(['0'])
             if linked in goto_links and linked not in ready_templates:
