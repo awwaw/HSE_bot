@@ -1,6 +1,6 @@
 # HSE_bot
 
-Для запуска вам понадобятся вот файлы с предобученными моделями. Их можно скачать с [Яндекс.Диска](https://disk.yandex.ru/d/6rFMzkTte3P3mw?w=1) или [Google.Drive](https://drive.google.com/drive/folders/1SghYRtAZybYIyIgKayjCM5MLYrCDXIzV?usp=sharing) Положите их в папку с проектом.
+Для запуска вам понадобятся файлы с предобученными моделями. Их можно скачать с [Яндекс.Диска](https://disk.yandex.ru/d/6rFMzkTte3P3mw?w=1) или [Google.Drive](https://drive.google.com/drive/folders/1SghYRtAZybYIyIgKayjCM5MLYrCDXIzV?usp=sharing) Положите их в папку с проектом.
 
 Не забудьте установить [CUDA](https://developer.nvidia.com/cuda-downloads) и соответствующую версию [PyTorch](https://pytorch.org/get-started/locally/).
 
